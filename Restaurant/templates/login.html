@@ -1,0 +1,116 @@
+{%extends 'base.html'%}
+{% block content %}
+<div class="row1">
+    <div class="content-section log">
+
+        
+        <form method="POST" action="{{ url_for('registerlog') }}">
+            {{ regform.hidden_tag() }}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Sign Up</legend>
+                <div class="form-group">
+                    {{ regform.username.label(class="form-control-label") }}
+
+                    {% if regform.username.errors %}
+                        {{ regform.username(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in regform.username.errors %}
+                            <span >{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ regform.username(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ regform.email.label(class="form-control-label") }}
+                    {% if regform.email.errors %}
+                        {{ regform.email(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in regform.email.errors %}
+                            <span >{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ regform.email(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ regform.password.label(class="form-control-label") }}
+                    {% if regform.password.errors %}
+                        {{ regform.password(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in regform.password.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ regform.password(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ regform.confirm_password.label(class="form-control-label") }}
+                    {% if regform.confirm_password.errors %}
+                        {{ regform.confirm_password(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in regform.confirm_password.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ regform.confirm_password(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+            </fieldset>
+            <div class="form-group">
+                {{ regform.submit(class="btn btn-outline-info") }}
+            </div>
+        </form>
+    </div>
+    <div class="content-section log ">
+        <form method="POST" action="{{ url_for('registerlog') }}">
+            {{ logform.hidden_tag() }}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Log In</legend>
+                <div class="form-group">
+                    {{ logform.email.label(class="form-control-label") }}
+                    {% if logform.email.errors %}
+                        {{ logform.email(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in logform.email.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ logform.email(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ logform.password.label(class="form-control-label") }}
+                    {% if logform.password.errors %}
+                        {{ logform.password(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in logform.password.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ logform.password(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-check">
+                    {{ logform.remember(class="form-check-input") }}
+                    {{ logform.remember.label(class="form-check-label") }}
+                </div>
+            </fieldset>
+            <div class="form-group">
+                {{ logform.submit(class="btn btn-primary btn-outline-info") }}
+            </div>
+            <small class="text-muted ml-2">
+                <a href="#">Forgot Password?</a>
+            </small>
+        </form>
+    </div>
+</div>
+{%endblock%}
+  

@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Murthal Parathewala -{{title}}</title>
+    
+   
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Oxygen:400,300,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Lora' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/restro.css') }}">
+
+    <script>
+      function myFunction() {
+     if (confirm("YOUR BOOKING HAS BEEN CONFIRMED \n FOR FURTHER DETAILS VISIT US ON THE ADDRESS PROVIDED")) {
+       
+      }
+     }
+     </script>
+  </head>
+<body>
+  <header>
+    <nav id="header-nav" class="navbar navbar-default">
+      <div class="container">
+        <div class="navbar-header">
+          <a href="/" class="pull-left visible-md visible-lg">
+            <div id="logo-img" alt="Logo image">
+              <img src="/static/images/stock-vector-mpw-letter-original-monogram-logo-design-1808974489.jpg" alt="logo" width="130px" height="60px">
+            
+            </div>
+          </a>
+
+          <div class="navbar-brand">
+            <a href="/"><h1>Murthal Parathewala</h1></a>
+            <p>The Taste Of Delhi</p>
+          
+            
+          </div>
+
+          <button type="button" class="navbar-toggle collapsed" 
+          data-toggle="collapse" data-target="#collapsable-nav" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+        
+        <div id="collapsable-nav" class="collapse navbar-collapse">
+           <ul id="nav-list" class="nav navbar-nav navbar-right">
+            <li class="visible-xs active">
+              <a href="/">
+                <span class="glyphicon glyphicon-home"></span> Home</a>
+            </li>
+            <li>
+              <a href="/menu">
+                <i class="fa fa-cutlery"></i><br class="hidden-xs"> Menu</a>
+            </li>
+            <li>
+              <a href="{{ url_for('home') }}#reserve">
+                <i class="fa fa-book fa-lg"></i><br class="hidden-xs"> Reserve</a>
+            </li>
+            <li >
+            {% if current_user.is_authenticated %}
+              <a class="nav-item nav-link" href="{{ url_for('logout') }}" style="  text-decoration: none;">
+                <button class="btn btn-primary">Logout</button>  
+              </a>
+            {% else %}
+            <a class="nav-item nav-link" href="{{ url_for('registerlog') }} "style= " text-decoration: none;">
+              <button class="btn btn-primary">Sign Up/Log In</button>
+            </a>
+            {% endif %}
+              
+            </li>
+            
+          </ul><!-- #nav-list -->
+        </div><!-- .collapse .navbar-collapse -->
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end visible-xs">
+          <button class="btn btn-primary me-md-2" type="button">Sign Up/Log in</button>
+         
+        </div>
+      </div><!-- .container -->
+    </nav><!-- #header-nav -->
+  </header>
+  <div class="">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    {% endif %}
+    {% endwith %}
+   
+</div>
+  {% block content %}{%endblock%}
+  
+  <footer class="panel-footer">
+    <div class="container">
+      <div class="row">
+        <section id="hours" class="col-sm-4">
+          <span>Hours:</span><br>
+          Sun-Fri: 11:15am - 12:00pm<br>
+          Sat-Sun: 11:15am - 12:30pm<br>
+          
+          <hr class="visible-xs">
+        </section>
+        <section id="address" class="col-sm-4">
+          <span>Address:</span><br>
+          51/B haridwar Road<br>
+          Race course,Dehradun,248001
+          <p>* Delivery area within 3-4 KM, with minimum order of Rs500 plus Rs 50 charge for all deliveries.</p>
+          <hr class="visible-xs">
+        </section>
+        <section id="testimonials" class="col-sm-4">
+          <p>"The best Desi restaurant I've been to! And that's saying a lot, since I've been to many!"</p>
+          <p>"Amazing food! Great service! Couldn't ask for more! I'll be back again and again!"</p>
+        </section>
+      </div>
+      <div class="text-center">&copy; Murthal Parathawala 2024</div>
+    </div>
+  </footer>
+
+  
+    <!-- jQuery (Bootstrap JS plugins depend on it) -->
+    <script src="/static/js/jquery-2.1.4.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/ajax-utils.js"></script> 
+    <script src="/static/js/script.js"></script>
+</body>
+</html>

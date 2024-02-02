@@ -1,0 +1,47 @@
+{%extends 'base.html'%}
+{% block content %}
+
+<div id="main-content" class="container">
+    <div class="jumbotron">
+      <img src="/static/images/small.webp" alt="Picture of restaurant" 
+      class="img-responsive visible-xs">
+     
+    </div>
+
+    <div id="home-tiles" class="row">
+      <div class="col-md-4 col-sm-6 col-xs-12">
+        <a href="/menu"><div id="menu-tile"><span>menu</span></div></a>
+      </div>
+      <div class="col-md-4 col-sm-6 col-xs-12">
+        <a href="/Specials"><div id="specials-tile"><span>specials</span></div></a>
+      </div>
+      <div class="col-md-4 col-sm-12 col-xs-12">
+        <a href="https://goo.gl/maps/mWqLHuJ9UYsKuRgc8" target="_blank">
+          <div id="map-tile">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d430.5390377522808!2d78.0460069!3d30.3136335!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1670941458402!5m2!1sen!2sin" width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <span>map</span>
+          </div>
+        </a>
+      </div>
+    </div><!-- End of #home-tiles -->
+    <div class="reserve" id="reserve">   <p class="res">For Reservation</p>
+      <form action="reserve.php" method="post">
+    <div>
+      <h2 id="content"></h2>
+    <input  type="text" required class="form-control con" id="one" name="fname" aria-describedby="nameHelp" placeholder="Enter your name" required>
+  </div>
+ 
+  <div>  <input type="number" pattern="[0-9]{10}"  required id="three" class="form-control" name="phno" placeholder="Enter your phone number" required> </div>
+<div>
+  <input type="number" required id="four" class="form-control" placeholder="No. of Seats" name="nos" required >
+</div>
+<div>
+  <input type="datetime-local" required id="five" class="form-control" placeholder="Enter Date & Time" name="dandt" required>
+</div>
+<button  onclick="myFunction()" type="submit" class="btn btn-primary" id="Submit">Submit</button>
+
+</div>
+</form>
+  </div><!-- End of #main-content -->
+
+{%endblock%}
