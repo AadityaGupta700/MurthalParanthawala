@@ -29,3 +29,10 @@ class LoginForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
     remember = BooleanField('Remember Me')
     submit = SubmitField('Login')
+
+# class reserve(FlaskForm):
+#     name=StringField('Email',
+#                         validators=[DataRequired(), Email()])
+#     phoneno=StringField('Phone Number',validators=[DataRequired(),Length(min=10,max=10)])
+#     seats=StringField('Seats',validators=[DataRequired(),Length(min=1,max=20)])
+#     DateandTime=StringField('DateandTime',validators=[DataRequired()])
