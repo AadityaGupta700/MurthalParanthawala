@@ -171,11 +171,22 @@ def special():
 @app.route("/menu")
 def menu():
     return render_template('menu.html',title='Menu',us='Sign/Log In',products=products )
-
-@app.route("/cart", methods=['POST'])
+#Add to cart
+@app.route("/cart", methods=['GET','POST'])
 def cart():
+    # print(session['shopcart'])'
+    total=0
+    if 'shopcart' in session:
+        for i in session['shopcart']:
+            total+=(i['price']*i['quantity'])
+
+    return render_template('cart.html',title='Cart',total=total)
+
+@app.route("/addtocart", methods = ['POST'])
+def addtocart():
     try:
         if request.method == 'POST':
+            
             product_id = int(request.form.get('product_id'))
             for i in products:
                 if i['id'] == product_id:
@@ -189,7 +200,7 @@ def cart():
             }
 
             if 'shopcart' in session:
-                print(session['shopcart'])
+                # print(session['shopcart'])
                 product_in_cart = False
                 for item in session['shopcart']:
                     if item['product_name'] == product['product_name']:
@@ -212,7 +223,7 @@ def cart():
         return redirect(url_for('menu'))
 
 
-
+#Login page
 @app.route("/login", methods=['GET', 'POST'])
 def registerlog():
     if current_user.is_authenticated:
@@ -253,9 +264,9 @@ def make_reservation():
     reservation=reserve(name=names,phone=phone,seats=seats,dateandtime=date_time_obj)
     db.session.add(reservation)
     db.session.commit()
-    users = reserve.query.all()
-    for user in users:
-        print(user.name, user.dateandtime)
+    # users = reserve.query.all()
+    # for user in users:
+    #     print(user.name, user.dateandtime)
     flash(f'Reservation booked for {names}', 'success')
     return redirect(url_for('home'))
     

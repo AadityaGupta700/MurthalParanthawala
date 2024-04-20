@@ -1,35 +1,5 @@
 {%extends 'base.html'%}
 {% block content %}
-
-<!-- 
-
-  <h2>Main course</h2>
-  <h3>Panner Main Course</h3>
-  <section class="row">
-    <div class="col-md-3 col-sm-4 col-xs-6 col-xxs-12">
-
-      <div class="category-tile">
-        <img width="230" height="200" src="/static/images/menu/Murthalspepanner.webp" alt="Lunch">
-
-        <div class="line">Murthal Special
-
-          <div>Rs 350</div>
-        </div>
-        <form action="{{ url_for('cart') }}" method="post">
-          <input type="hidden" name="product_image" value="/static/images/menu/Murthalspepanner.webp">
-          <input type="hidden" name="product_name" value="Murthal Special">
-          <input type="hidden" name="price" value="350">
-          <input type="hidden" name="quantity" id="quantity" value="1">
-          <button type="button" onclick="decreaseQuantity()">-</button>
-          <span id="quantity-display">1</span>
-          <button type="button" onclick="increaseQuantity()">+</button> 
-          <button type="submit" class="addtocart">Add to Cart</button>
-        </form>
-      </div>
-
-  </section> 
-
-</div>End of #main-content -->
 <div id="main-content" class="container">
   <h2 id="menu-categories-title" class="text-center">Menu Categories</h2>
   <h2>Panner Main course</h2>
@@ -46,7 +16,7 @@
           </div>
         </div>
         <div class="card-footer">
-          <form action="{{url_for('cart')}}" method="post">
+          <form action="{{url_for('addtocart')}}" method="post">
             <input type="hidden" name="product_id" value="{{product.id}}">
             <button type="submit" class="btn btn-sm btn-warning addtocart">Add to Cart</button>
           </form>
@@ -69,7 +39,7 @@
           </div>
         </div>
         <div class="card-footer">
-          <form action="{{url_for('cart')}}" method="post">
+          <form action="{{url_for('addtocart')}}" method="post">
             <input type="hidden" name="product_id" value="{{product.id}}">
             <button type="submit" class="btn btn-sm btn-warning addtocart">Add to Cart</button>
           </form>
@@ -92,7 +62,7 @@
           </div>
         </div>
         <div class="card-footer">
-          <form action="{{url_for('cart')}}" method="post">
+          <form action="{{url_for('addtocart')}}" method="post">
             <input type="hidden" name="product_id" value="{{product.id}}">
             <button type="submit" class="btn btn-sm btn-warning addtocart">Add to Cart</button>
           </form>
@@ -115,7 +85,7 @@
           </div>
         </div>
         <div class="card-footer">
-          <form action="{{url_for('cart')}}" method="post">
+          <form action="{{url_for('addtocart')}}" method="post">
             <input type="hidden" name="product_id" value="{{product.id}}">
             <button type="submit" class="btn btn-sm btn-warning addtocart">Add to Cart</button>
           </form>

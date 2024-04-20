@@ -1,4 +1,50 @@
 {% extends 'base.html'%}
 {% block content %}
+<div class="container">
+    {%if not session['shopcart']%}
+    <h1>Your shopping cart is empty.</h1><br />
 
+    {% else %}
+    <div class="row">
+        <div class="col-md-8">
+            <table class="carttable " border="1">
+                <tr>
+                    <th>No</th>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                </tr>
+                {% for item in session['shopcart']%}
+                <tr  id='item{{item.product_name}}'>
+                    <td>{{loop.index}}</td>
+                    <td>
+                        <div class="product-container">
+                            <img src="{{ item.product_img }}" alt="" width="100px" height="100px">
+                            <span class="product-details">
+                                <span>{{ item.product_name }}</span>
+                                <div class="price">Rs {{ item.price }}</div>
+                            </span>
+                        </div>
+                    </td>
+                    <td>{{item.price*item.quantity}}</td>
+                    <td align="center">
+                        <!-- json ajax update cart -->
+                    <button class="decrease-btn" data-item-id="{{ item.product_name }}">-</button>
+                        <span class="quantity-display" id="count{{ item.product_name }}">{{ item.quantity }}</span>
+                        <button class="increase-btn" data-item-id="{{ item.product_name }}">+</button>
+                    </td>
+
+                </tr>
+                {% endfor %}
+                
+            </table>
+        </div>
+        <div class="col-md-4 " >
+            <h3>Total price</h3>
+            <h3>Rs {{total}}</h3>
+            <button class="btn btn-default">Checkout</button> 
+        </div>
+    </div>
+</div>
+{%endif%}
 {% endblock %}
