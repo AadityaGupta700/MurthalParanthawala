@@ -1,5 +1,5 @@
 from datetime import datetime
-from flask import render_template, url_for, flash, redirect,request,session
+from flask import render_template, url_for, flash, redirect,request,session,jsonify
 from flask_login import login_user,current_user, logout_user
 from Restaurant import app,db
 from Restaurant.model import User,reserve
@@ -185,13 +185,15 @@ def cart():
 @app.route("/addtocart", methods = ['POST'])
 def addtocart():
     try:
-        if request.method == 'POST':
-            
-            product_id = int(request.form.get('product_id'))
+        # if request.method == 'POST':
+            product_id = request.json['pid']
+            print(product_id,"this")
             for i in products:
-                if i['id'] == product_id:
+                print(i['id'])
+                if i['id'] == int(product_id):
                     selected_product = i
-
+                    break
+            
             product = {
                 "product_img": selected_product['image'],
                 "product_name": selected_product['name'],
@@ -220,8 +222,35 @@ def addtocart():
     except Exception as e:
         print(e)
     finally:
-        return redirect(url_for('menu'))
+        return jsonify({'cart_count': len(session['shopcart'])})
+    
 
+@app.route('/get_cart_count', methods=['GET'])
+def get_cart_count():
+    # Return JSON response with current cart count
+    return jsonify({'cart_count': len(session.get('shopcart', None))})
+
+
+@app.route('/update_session', methods=['POST'])
+def update_session():
+    data = request.json  #  data is sent as JSON
+    itemname = list(data.keys())[0]  # Extract the item name from the JSON data
+    quantity = data[itemname]  # Extract the quantity from the JSON data
+    # print(itemname,quantity, "\n\n")
+    # Update session['shopcart'] with the new quantity
+    for item in session['shopcart']:
+        if item['product_name'] == itemname:
+            if quantity==0:
+                session['shopcart'].remove(item)
+            else:
+                item['quantity'] = quantity
+            break
+    session.modified = True   # Mark the session as modified
+    # print(session['shopcart'])
+    if len(session['shopcart'])==0:
+        return redirect(url_for('cart'))
+    
+    return jsonify({'status': 'success'})
 
 #Login page
 @app.route("/login", methods=['GET', 'POST'])

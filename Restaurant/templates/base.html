@@ -66,7 +66,7 @@
             </li>
             <li>
               <a href="/cart">
-                <i class="fa fa-shopping-cart fa-lg"></i><br class="hidden-xs"> Cart({{session['shopcart']|length}})</a>
+                <i class="fa fa-shopping-cart fa-lg"></i><br class="hidden-xs"> Cart(<span id="cart-count">0</span>)</a>
             </li>
             <li >
             {% if current_user.is_authenticated %}
@@ -84,8 +84,9 @@
           </ul><!-- #nav-list -->
         </div><!-- .collapse .navbar-collapse -->
         <div class="d-grid gap-2 d-md-flex justify-content-md-end visible-xs">
+          <a class="nav-item nav-link" href="{{ url_for('registerlog') }} ">
           <button class="btn btn-primary me-md-2" type="button">Sign Up/Log in</button>
-         
+         </a>
         </div>
       </div><!-- .container -->
     </nav><!-- #header-nav -->

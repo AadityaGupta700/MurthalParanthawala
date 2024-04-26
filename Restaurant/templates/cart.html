@@ -15,7 +15,7 @@
                     <th>Quantity</th>
                 </tr>
                 {% for item in session['shopcart']%}
-                <tr  id='item{{item.product_name}}'>
+                <tr id='item{{item.product_name}}'>
                     <td>{{loop.index}}</td>
                     <td>
                         <div class="product-container">
@@ -26,23 +26,26 @@
                             </span>
                         </div>
                     </td>
-                    <td>{{item.price*item.quantity}}</td>
+                    <td id="currprice{{item.product_name}}">{{item.price*item.quantity}}</td>
                     <td align="center">
                         <!-- json ajax update cart -->
-                    <button class="decrease-btn" data-item-id="{{ item.product_name }}">-</button>
+                        <button class="decrease-btn" data-item-id="{{ item.product_name }}"
+                            item-price="{{item.price}}">-</button>
                         <span class="quantity-display" id="count{{ item.product_name }}">{{ item.quantity }}</span>
-                        <button class="increase-btn" data-item-id="{{ item.product_name }}">+</button>
+                        <button class="increase-btn" data-item-id="{{ item.product_name }}"
+                            item-price="{{item.price}}">+</button>
                     </td>
-
                 </tr>
                 {% endfor %}
-                
+
             </table>
         </div>
-        <div class="col-md-4 " >
+        <div class="col-md-4 ">
             <h3>Total price</h3>
-            <h3>Rs {{total}}</h3>
-            <button class="btn btn-default">Checkout</button> 
+            <h3>Rs
+                <span id="total">{{total}}</span>
+            </h3>
+            <button class="btn btn-default">Checkout</button>
         </div>
     </div>
 </div>
