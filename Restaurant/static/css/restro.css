@@ -177,18 +177,31 @@ body {
     display: flex;
     align-items: center;
 }
+.cart-popup {
+  display: none;
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: red;
+  border: 1px solid black;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 9999;
+}
 
 .product-details {
     margin-left: 10px; /* Adjust as needed for spacing */
 }
-.col-md-4{
+.rightcart{
   display: flex;
   height: 20vw;
   width: 30%;
   margin-top: 20%;
   justify-content: center;
   flex-direction:column;
-  border: solid black;
+  border: solid black 1px;
   text-align: center;
   border-radius: 20%;
 }

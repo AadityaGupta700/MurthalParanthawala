@@ -285,6 +285,9 @@
 
 document.addEventListener("DOMContentLoaded", function () {
 
+  var addToCartBtn = document.getElementById("add-to-cart-btn");
+  var cartPopup = document.getElementById("cart-popup");
+  
   function updateCartCount(count) {
     document.getElementById("cart-count").textContent = count;
   }
@@ -304,7 +307,13 @@ document.addEventListener("DOMContentLoaded", function () {
     button.addEventListener("click", function () {
       
       const item = button.getAttribute("item-id");
-      console.log(item);
+      cartPopup.textContent = "🛒 Item added to your cart! Happy shopping! 🎉";
+      cartPopup.style.display = "block";
+
+    // Hide the message after 3 seconds (3000 milliseconds)
+    setTimeout(function() {
+      cartPopup.style.display = "none";
+    }, 3000);
 
       fetch('/addtocart', {
         method: 'POST',

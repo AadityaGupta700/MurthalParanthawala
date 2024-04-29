@@ -1,8 +1,9 @@
 from datetime import datetime
+import secrets
 from flask import render_template, url_for, flash, redirect,request,session,jsonify
-from flask_login import login_user,current_user, logout_user
+from flask_login import login_user,current_user, logout_user,login_required
 from Restaurant import app,db
-from Restaurant.model import User,reserve
+from Restaurant.model import User,reserve,CustomerOrder
 from Restaurant.form import RegistrationForm, LoginForm
 
 products = [
@@ -174,7 +175,6 @@ def menu():
 #Add to cart
 @app.route("/cart", methods=['GET','POST'])
 def cart():
-    # print(session['shopcart'])'
     total=0
     if 'shopcart' in session:
         for i in session['shopcart']:
@@ -228,7 +228,10 @@ def addtocart():
 @app.route('/get_cart_count', methods=['GET'])
 def get_cart_count():
     # Return JSON response with current cart count
-    return jsonify({'cart_count': len(session.get('shopcart', None))})
+    if  'shopcart' in session:
+      return jsonify({'cart_count': len(session.get('shopcart'))})
+    else:
+        return  jsonify({'cart_count':0})
 
 
 @app.route('/update_session', methods=['POST'])
@@ -236,7 +239,6 @@ def update_session():
     data = request.json  #  data is sent as JSON
     itemname = list(data.keys())[0]  # Extract the item name from the JSON data
     quantity = data[itemname]  # Extract the quantity from the JSON data
-    # print(itemname,quantity, "\n\n")
     # Update session['shopcart'] with the new quantity
     for item in session['shopcart']:
         if item['product_name'] == itemname:
@@ -246,7 +248,6 @@ def update_session():
                 item['quantity'] = quantity
             break
     session.modified = True   # Mark the session as modified
-    # print(session['shopcart'])
     if len(session['shopcart'])==0:
         return redirect(url_for('cart'))
     
@@ -256,7 +257,7 @@ def update_session():
 @app.route("/login", methods=['GET', 'POST'])
 def registerlog():
     if current_user.is_authenticated:
-         redirect (url_for('home'))
+        return redirect (url_for('home'))
 
     regform = RegistrationForm()
     logform = LoginForm()
@@ -265,7 +266,7 @@ def registerlog():
         db.session.add(user)
         db.session.commit()
         flash(f'Account created for {regform.username.data}!', 'success')
-        login_user(user, remember=regform. remember .data)
+        login_user(user)
         return redirect(url_for('home'))
     elif logform.validate_on_submit():
         user = User.query.filter_by(email=logform.email.data).first()
@@ -279,8 +280,8 @@ def registerlog():
 
 @app. route ("/logout")
 def logout():
-  logout_user ()
-  redirect (url_for('home'))
+  logout_user()
+  return redirect (url_for('home'))
 
 @app.route("/reserve",methods=['GET','POST'])
 def make_reservation():
@@ -300,4 +301,23 @@ def make_reservation():
     return redirect(url_for('home'))
     
 
-
+@app.route('/getorder')
+def get_order():
+    if current_user.is_authenticated:
+        customer_id = current_user.id
+        invoice = secrets.token_hex(5)
+        try:
+            order = CustomerOrder(invoice=invoice,customer_id=customer_id,orders=session['shopcart'])
+            db.session.add(order)
+            db.session.commit()
+            session.pop('shopcart')
+            flash('Your order has been sent successfully','success')
+            return redirect(url_for('home'))  #HAVE TO CHANGE,invoice
+        except Exception as e:
+            print(e,"med")
+            flash('Some thing went wrong while get order', 'danger')
+            return redirect(url_for('cart'))
+    else:
+        flash('You need to login First','warning')
+        return  redirect(url_for('registerlog'))
+        
