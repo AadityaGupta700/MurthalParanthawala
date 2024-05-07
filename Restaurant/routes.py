@@ -153,7 +153,7 @@ products = [
     {
         'id': 25,
         'name': 'Lacha Paratha',
-        'image': '/static/images/menu/lacha.jpg',
+        'image': '/static/images/menu/Lacha.jpg',
         'price': 40
     }
 ]
