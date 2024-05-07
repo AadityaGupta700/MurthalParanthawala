@@ -5,8 +5,6 @@ from flask_login import login_user,current_user, logout_user,login_required
 from Restaurant import app,db
 from Restaurant.model import User,reserve,CustomerOrder
 from Restaurant.form import RegistrationForm, LoginForm
-import stripe
-
 products = [
     {
         'id': 1,
