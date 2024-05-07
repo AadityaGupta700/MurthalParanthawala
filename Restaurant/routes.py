@@ -202,7 +202,6 @@ def addtocart():
         # if request.method == 'POST':
             product_id = request.json['pid']
             for i in products:
-                print(i['id'])
                 if i['id'] == int(product_id):
                     selected_product = i
                     break
@@ -220,7 +219,6 @@ def addtocart():
                 for item in session['shopcart']:
                     if item['product_name'] == product['product_name']:
                         # If the product is already in the cart, increment its quantity
-                        print('new quantity')
                         item['quantity'] += 1
                         product_in_cart = True
                         break
@@ -332,7 +330,7 @@ def get_order():
             flash('Your order has been sent successfully','success')
             return redirect(url_for('home'))  #HAVE TO CHANGE,invoice
         except Exception as e:
-            print(e,"med")
+            print(e)
             flash('Some thing went wrong while get order', 'danger')
             return redirect(url_for('cart'))
     else:
