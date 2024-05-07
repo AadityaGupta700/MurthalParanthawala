@@ -5,6 +5,7 @@ from flask_login import login_user,current_user, logout_user,login_required
 from Restaurant import app,db
 from Restaurant.model import User,reserve,CustomerOrder
 from Restaurant.form import RegistrationForm, LoginForm
+import stripe
 
 products = [
     {
@@ -163,7 +164,22 @@ products = [
 @app.route("/Main Page")
 def home():
     return render_template('index.html',title='Home')
-
+@app.route("/editmenu",methods=['POST'])
+def editmenu():
+    if request.method == 'POST':
+        file = request.files['item-image']
+        name=request.form.get('item-name')
+        price=request.form.get('item-price')
+        filen='/static/images/menu/'+ file.filename
+        item={'id':len(products)+1,'name':name,'image':filen,'price':price}
+        products.append(item)
+        print(products[-2:])
+        if file:
+            
+            # Save the file to a specific folder
+            file.save(filen)
+            return 'File uploaded successfully'
+    
 
 @app.route("/Specials")
 def special():
@@ -187,7 +203,6 @@ def addtocart():
     try:
         # if request.method == 'POST':
             product_id = request.json['pid']
-            print(product_id,"this")
             for i in products:
                 print(i['id'])
                 if i['id'] == int(product_id):
@@ -271,13 +286,18 @@ def registerlog():
     elif logform.validate_on_submit():
         user = User.query.filter_by(email=logform.email.data).first()
         if user and user.password==logform.password.data :
+            if user.username==	"admin":
+                login_user(user, remember=logform.remember.data)
+                return redirect(url_for('admin'))
             flash('You have been logged in!', 'success')
             login_user(user, remember=logform.remember.data)
             return redirect(url_for('home'))
         else:
             flash('Login Unsuccessful. Please check username and password', 'danger')
     return render_template('login.html', title='Sign Up/Login', regform=regform,logform=logform)
-
+@app.route("/admin")
+def admin():
+    return render_template('admin.html',title='Admin')
 @app. route ("/logout")
 def logout():
   logout_user()

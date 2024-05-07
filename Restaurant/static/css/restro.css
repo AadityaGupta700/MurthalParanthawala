@@ -20,8 +20,9 @@ body {
   #header-nav {
     background-color: #f6b319;
     border-radius: 10px;
-      position: sticky;
+    position: sticky;
     border: 0;
+    
   }
   
    #logo-img {
@@ -66,13 +67,10 @@ body {
     color: #951C49;
     text-align: center;
   }
-  #nav-list > li:nth-child(-n+4) > a:hover{
+  #nav-list > li:nth-child(-n+5) > a:hover{
     background: #E7E7E7;
   }
-  /* #nav-list a span {
-    font-size: 1.8em;
-  } */
-  
+
   #phone {
     margin-top: 5px;
   }
@@ -391,7 +389,43 @@ body {
     font-style: italic;
   }
   /* END SINGLE CATEGORY PAGE */
-  
+  /* admin dashboard */
+  .sidebar {
+    height: 80%;
+    width: 250px;
+    position:  absolute;
+    top: 80px;
+    background-color: #222;
+   
+}
+.sidebar a:active{
+  background-color: #555;
+
+}
+input {
+  color: black; /* or any other color you prefer */
+}
+.sidebar h3{
+  padding: 10px;
+}
+.sidebar a {
+    padding: 10px 20px;
+    text-decoration: none;
+    font-size: 18px;
+    color: #fff;
+    display: block;
+}
+.sidebar a:hover {
+    background-color: #555;
+}
+
+input[type="file"]{
+  display: inline-block;
+}
+.content {
+    margin-left: 250px;
+    padding: 20px;
+}
   
   /********** Large devices only **********/
   @media (min-width: 1200px) {

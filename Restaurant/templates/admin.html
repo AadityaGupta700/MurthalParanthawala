@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="sidebar">
+    <H3>Admin Dashboard</H3>
+    <a href="#edit-menu-form" id="edit-menu">Edit Menu</a>
+    <a href="#view-reservations-content" id="view-reservations">View Reservations</a>
+    <a href="#" id="Orders">Orders</a>
+    <a href="#" id="payments">Payments</a>
+</div>
+
+<!-- Page content -->
+<div class="content">
+    <h1>Welcome to the Admin Dashboard</h1>
+
+    <!-- Edit Menu Form -->
+    <div id="edit-menu-form">
+        <h2>Edit Menu</h2>
+        <form id="menu-form" method="post" action="/editmenu" enctype="multipart/form-data">
+            <label for="item-name">Item Name:</label>
+            <input type="text" id="item-name" name="item-name" required><br><br>
+            <label for="item-price">Item Price:</label>
+            <input type="number" id="item-price" name="item-price" required><br><br>
+            <label for="item-image">Item Image:</label>
+            <input type="file" name="item-image" id="item-image" required><br><br>
+            <button type="submit">Add Item</button>
+        </form>
+        
+    </div>
+
+    <!-- View Reservations -->
+    <div id="view-reservations-content" style="display: none;">
+        <h2>View Reservations</h2>
+        <p>No reservations yet.</p>
+        <!-- Reservations will be displayed here dynamically -->
+    </div>
+</div>
+
+
+{% endblock %}
