@@ -20,7 +20,13 @@ class reserve(db.Model):
     seats=db.Column(db.Integer)
     dateandtime=db.Column(db.DateTime)
 
-
+class products(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50), unique=True, nullable=False)
+    price = db.Column(db.Float, nullable=False)
+    image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
+    def __repr__(self):
+        return f"Product('{self.name}', '{self.price}')"
 class JsonEcodedcart(db.TypeDecorator):
     impl = db.Text
     def process_bind_param(self, value, dialect):

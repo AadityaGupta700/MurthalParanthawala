@@ -3,164 +3,13 @@ import secrets
 from flask import render_template, url_for, flash, redirect,request,session,jsonify
 from flask_login import login_user,current_user, logout_user,login_required
 from Restaurant import app,db
-from Restaurant.model import User,reserve,CustomerOrder
+from Restaurant.model import User,reserve,CustomerOrder,products
 from Restaurant.form import RegistrationForm, LoginForm
-products = [
-    {
-        'id': 1,
-        'name': 'Murthal Special',
-        'image': '/static/images/menu/Murthalspepanner.webp',
-        'price': 350
-    },
-    {
-        'id': 2,
-        'name': 'Shahi Paneer',
-        'image': '/static/images/menu/Shahi-Paneer-1.jpg',
-        'price': 350
-    },
-    {
-        'id': 3,
-        'name': 'Panner Butter',
-        'image': '/static/images/menu/punnerbutter.webp',
-        'price': 340
-    },
-    {
-        'id': 4,
-        'name': 'Kadhai Paneer',
-        'image': '/static/images/menu/Kadai Paneer Recipe Restaurant style.jpg',
-        'price': 360
-    },
-    {
-        'id': 5,
-        'name': 'Panner Do Pyaza',
-        'image': '/static/images/menu/pannerpyaj.webp',
-        'price': 330
-    },
-    {
-        'id': 6,
-        'name': 'Palak Paneer',
-        'image': '/static/images/menu/palakpanner.webp',
-        'price': 320
-    },
-    {
-        'id': 7,
-        'name': 'Chilli Paneer',
-        'image': '/static/images/menu/chilipan.webp',
-        'price': 340
-    },
-    {
-        'id': 8,
-        'name': 'Paneer Keema',
-        'image': '/static/images/menu/pannerkeema.webp',
-        'price': 320
-    },
-    {
-        'id': 9,
-        'name': 'Paneer Kali Mirch',
-        'image': '/static/images/menu/pannerkalimirch.webp',
-        'price': 320
-    },
-    {
-        'id': 10,
-        'name': 'Red Gravy Chaap',
-        'image': '/static/images/menu/malaichaap red.webp',
-        'price': 260
-    },
-    {
-        'id': 11,
-        'name': 'Changazi Chaap',
-        'image': '/static/images/menu/changa=ezichaap.webp',
-        'price': 280
-    },
-    {
-        'id': 12,
-        'name': 'Chaap Curry',
-        'image': '/static/images/menu/chaapkari.webp',
-        'price': 250
-    },
-    {
-        'id': 13,
-        'name': 'Kadhai Chaap',
-        'image': '/static/images/menu/kadhaichhap.webp',
-        'price': 260
-    },
-    {
-        'id': 14,
-        'name': 'Keema Chaap',
-        'image': '/static/images/menu/kemmachaap.webp',
-        'price': 290
-    },
-    {
-        'id': 15,
-        'name': 'Stuffed Chaap',
-        'image': '/static/images/menu/stuffchaap.webp',
-        'price': 320
-    },
-    {
-        'id': 16,
-        'name': 'Biryani',
-        'image': '/static/images/menu/biryani.webp',
-        'price': 200
-    },
-    {
-        'id': 17,
-        'name': 'Dal Makhani',
-        'image': '/static/images/menu/dalmak.jpeg',
-        'price': 230
-    },
-    {
-        'id': 18,
-        'name': 'Dum Aloo',
-        'image': '/static/images/menu/dumallo.webp',
-        'price': 220
-    },
-    {
-        'id': 19,
-        'name': 'Kadhi Chawal',
-        'image': '/static/images/menu/kadhic.webp',
-        'price': 150
-    },
-    {
-        'id': 20,
-        'name': 'Malai Kofta',
-        'image': '/static/images/menu/malikoof.jpeg',
-        'price': 320
-    },
-    {
-        'id': 21,
-        'name': 'Mix Veg',
-        'image': '/static/images/menu/mixveg.webp',
-        'price': 220
-    },
-    {
-        'id': 22,
-        'name': 'Mushroom Gravy',
-        'image': '/static/images/menu/mushroom.webp',
-        'price': 250
-    },
-    {
-        'id': 23,
-        'name': 'Stuff Naan',
-        'image': '/static/images/menu/stuffnaan.webp',
-        'price': 60
-    },
-    {
-        'id': 24,
-        'name': 'Special Murthal Naan',
-        'image': '/static/images/menu/specialnnam.webp',
-        'price': 70
-    },
-    {
-        'id': 25,
-        'name': 'Lacha Paratha',
-        'image': '/static/images/menu/lacha.jpg',
-        'price': 40
-    }
-]
-
+import os
 @app.route("/")
 @app.route("/Main Page")
 def home():
+    
     return render_template('index.html',title='Home')
 @app.route("/editmenu",methods=['POST'])
 def editmenu():
@@ -168,15 +17,22 @@ def editmenu():
         file = request.files['item-image']
         name=request.form.get('item-name')
         price=request.form.get('item-price')
-        filen='/static/images/menu/'+ file.filename
-        item={'id':len(products)+1,'name':name,'image':filen,'price':price}
-        products.append(item)
-        print(products[-2:])
-        if file:
-            
-            # Save the file to a specific folder
-            file.save(filen)
-            return 'File uploaded successfully'
+         # Define the directory path where the file should be saved
+        upload_dir = os.path.join(app.root_path, 'static/images/menu')
+
+        # Ensure the directory exists
+        os.makedirs(upload_dir, exist_ok=True)
+
+        # Construct the full file path
+        file_path = os.path.join(upload_dir, file.filename)
+         # Save the file
+        file.save(file_path)
+        filen= 'static/images/menu'+file.filename
+        prod_count = products.query.count()+1
+        prod=products(id=prod_count,name=name,price=price,image_file=filen)
+        db.session.add(prod)
+        db.session.commit()
+    return redirect(url_for('menu'))
     
 
 @app.route("/Specials")
@@ -185,7 +41,8 @@ def special():
 
 @app.route("/menu")
 def menu():
-    return render_template('menu.html',title='Menu',us='Sign/Log In',products=products )
+    prod=products.query.all()
+    return render_template('menu.html',title='Menu',us='Sign/Log In',products=prod )
 #Add to cart
 @app.route("/cart", methods=['GET','POST'])
 def cart():
@@ -201,15 +58,16 @@ def addtocart():
     try:
         # if request.method == 'POST':
             product_id = request.json['pid']
-            for i in products:
-                if i['id'] == int(product_id):
+            singleproduct = products.query.all()
+            for i in singleproduct:
+                if i.id == int(product_id):
                     selected_product = i
                     break
             
             product = {
-                "product_img": selected_product['image'],
-                "product_name": selected_product['name'],
-                "price": selected_product['price'],
+                "product_img": selected_product.image_file,
+                "product_name": selected_product.name,
+                "price": selected_product.price,
                 "quantity": 1
             }
 

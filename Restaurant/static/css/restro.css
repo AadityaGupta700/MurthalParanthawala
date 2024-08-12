@@ -459,7 +459,7 @@ input[type="file"]{
   @media (min-width: 768px) and (max-width: 991px) {
     /* Home Page */
     .container .jumbotron {
-      background: url('../Images/small.webp') no-repeat;
+      background: url('../images/small.webp') no-repeat;
       height: 432px;
     }
     /* End Home Page */
