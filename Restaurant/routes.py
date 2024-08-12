@@ -9,7 +9,6 @@ import os
 @app.route("/")
 @app.route("/Main Page")
 def home():
-    
     return render_template('index.html',title='Home')
 @app.route("/editmenu",methods=['POST'])
 def editmenu():
@@ -195,3 +194,12 @@ def get_order():
         flash('You need to login First','warning')
         return  redirect(url_for('registerlog'))
         
+#  last_two_users = db.session.query(User).order_by(User.id.desc()).limit(2).all()
+
+#     # Delete the last two records
+#     for user in last_two_users:
+#         db.session.delete(user)
+
+#     # Commit the transaction to apply the changes
+#     db.session.commit()
+    
