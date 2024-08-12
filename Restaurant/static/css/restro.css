@@ -224,12 +224,12 @@ body {
     box-shadow: 0 1px 5px 1px #cccccc;
   }
   #menu-tile {
-    background: url('../Images/download.jpeg') ;
+    background: url('../images/download.jpeg') ;
    background-position: center;
    
   }
   #specials-tile {
-    background: url('../Images/paratha.webp') ;
+    background: url('../images/paratha.webp') ;
     background-position: center;
   }
   #menu-tile span, #specials-tile span, #map-tile span {
@@ -430,7 +430,7 @@ input[type="file"]{
   /********** Large devices only **********/
   @media (min-width: 1200px) {
     .container .jumbotron {
-      background: url('../Images/large.webp') no-repeat;
+      background: url('../images/large.webp') no-repeat;
       height: 800px;
     }
   }
@@ -439,7 +439,7 @@ input[type="file"]{
   @media (min-width: 992px) and (max-width: 1199px) {
     /* Header */
     #logo-img {
-      background: url('../Images/stock-vector-mpw-letter-original-monogram-logo-design-1808974489.jpg') no-repeat;
+      background: url('../images/stock-vector-mpw-letter-original-monogram-logo-design-1808974489.jpg') no-repeat;
       width: 100px;
       height: 70px;
       margin: 5px 5px 5px 0;
@@ -448,7 +448,7 @@ input[type="file"]{
   
     /* Home Page */
     .container .jumbotron {
-      background: url('../Images/medium.webp') no-repeat;
+      background: url('../images/medium.webp') no-repeat;
       height: 600px;
       position: relative;
     }
